@@ -33,7 +33,7 @@ function unixToUTC(timestamp) {
 
     return {
         date: `${numbering(date.getUTCDate())} ${month[date.getMonth()]} ${date.getFullYear()}`,
-        time: `${hours}:${date.getUTCMinutes()} ${day} UTC`
+        time: `${hours}:${("0" + date.getUTCMinutes()).slice(-2)} ${day} UTC`
     };
 }
 
