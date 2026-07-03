@@ -4,6 +4,8 @@ const fs = require('fs');
 require("dotenv").config();
 require('./utils/createLogs');
 
+require('./server.js');
+
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
