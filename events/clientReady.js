@@ -1,5 +1,4 @@
 const { ActivityType, PresenceUpdateStatus } = require("discord.js");
-require("dotenv").config();
 
 module.exports = {
     name: 'clientReady',
@@ -8,13 +7,13 @@ module.exports = {
             client.user.setPresence({
                 activities: [
                     {
-                        name: `CTFを周回中`,
+                        name: `/prestige | ${client.ws.ping} ms`,
                         type: ActivityType.Playing
                     }
                 ],
                 status: PresenceUpdateStatus.Online // Online : いつもの, DoNotDisturb : 赤い奴, Idle : 月のやつ, Invisible : 表示なし
             });
-        }, 10_000);
+        }, 5_000);
 
         custom.log(`Logged in as ${client.user.tag}`);
     },

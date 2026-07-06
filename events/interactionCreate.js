@@ -52,5 +52,16 @@ module.exports = {
                 return;
             }
         };
+
+        if (interaction.isStringSelectMenu()) {
+            try {
+                const selectmenu = require(`../interactions/selectmenus/${interaction.customId}.js`);
+                await selectmenu.execute(interaction, client);
+            } catch (error) {
+                custom.error(`${interaction.customId} が見つかりません\n${error.message}`, "");
+                interaction.reply({ content: "Error", flags: [MessageFlags.Ephemeral] });
+                return;
+            }
+        };
     },
 };

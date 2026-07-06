@@ -14,7 +14,11 @@ const prestige = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-const commands = [prestige];
+const setup = new SlashCommandBuilder()
+    .setName('setup')
+    .setDescription('管理者権限が必要です');
+
+const commands = [prestige, setup];
 
 // 登録用関数
 const { REST, Routes } = require("discord.js")

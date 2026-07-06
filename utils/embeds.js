@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
+const color = "#ffffff";
 
-function basic_embed(title, description, color) {
+function basic_embed(title, description) {
     const embed = new EmbedBuilder()
         .setTitle(title)
         .setDescription(description)
@@ -17,15 +18,11 @@ const fields = [
     { name: "Name", value: "Value" }
 ];
 */
-function fields_embed(title, description, fields, img, color) {
+function fields_embed(title, description, fields) {
     const embed = new EmbedBuilder()
         .setTitle(title)
         .setColor(color)
         .setTimestamp();
-
-    if (img) {
-        embed.setThumbnail(img);
-    }
 
     if (description) {
         embed.setDescription(description);
@@ -43,7 +40,38 @@ function fields_embed(title, description, fields, img, color) {
     return embed;
 };
 
+function image_url_embed(title, url, image) {
+    const embed = new EmbedBuilder()
+        .setTitle(title)
+        .setURL(url)
+        .setColor(color)
+        .setImage(image)
+        .setTimestamp();
+
+    return embed;
+};
+
+async function transfer_embed(authorName, authorIcon, title, url, description, sendId, time) {
+    const embed = new EmbedBuilder()
+        .setAuthor({
+            name: authorName,
+            iconURL: authorIcon,
+        })
+        .setTitle(title)
+        .setURL(url)
+        .setDescription(description)
+        .setColor(color)
+        .setFooter({
+            text: `Sent ID: ${sendId}`,
+        })
+        .setTimestamp(time);
+
+    return await embed;
+}
+
 module.exports = {
     basic_embed,
-    fields_embed
+    fields_embed,
+    image_url_embed,
+    transfer_embed
 };

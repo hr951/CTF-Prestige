@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 require("dotenv").config();
 require('./utils/createLogs');
 
@@ -23,6 +24,16 @@ const client = new Client({
 
 // 設定
 const token = process.env.DISCORD_BOT_TOKEN;
+const uri = process.env.DB;
+
+mongoose
+    .connect(uri)
+    .then(() => {
+        custom.log('Connected DataBase - index.js');
+    })
+    .catch((error) => {
+        custom.error(error);
+    });
 
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
