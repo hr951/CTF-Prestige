@@ -43,13 +43,13 @@ module.exports = {
                 { upsert: true, new: true } // 無ければ作成、更新後のデータを返す
             );
 
-            interaction.reply({
+            await interaction.reply({
                 content: 'サーバー情報を更新しました\n削除するチャンネル:```\n' + channelId_del + '```\n転送するチャンネル:```\n' + channelId_send + '```\n削除するまでの時間:```\n' + deleteTime + '分```',
                 flags: [MessageFlags.Ephemeral]
             });
         } catch (error) {
             custom.error(error);
-            interaction.reply({
+            await interaction.reply({
                 content: `サーバー情報の更新に失敗しました`,
                 flags: [MessageFlags.Ephemeral]
             });
