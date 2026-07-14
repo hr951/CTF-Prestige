@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, ApplicationIntegrationType, InteractionContextType } = require("discord.js");
 require('dotenv').config();
 
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -12,7 +12,16 @@ const prestige = new SlashCommandBuilder()
         option.setName('name')
             .setDescription('ユーザー名')
             .setRequired(true)
-    );
+    )
+    .setIntegrationTypes([
+        ApplicationIntegrationType.GuildInstall,
+        ApplicationIntegrationType.UserInstall
+    ])
+    .setContexts([
+        InteractionContextType.Guild,
+        InteractionContextType.BotDM,
+        InteractionContextType.PrivateChannel
+    ]);;
 
 const setup = new SlashCommandBuilder()
     .setName('setup')
