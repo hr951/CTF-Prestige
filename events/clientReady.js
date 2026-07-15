@@ -7,7 +7,7 @@ module.exports = {
             client.user.setPresence({
                 activities: [
                     {
-                        name: `/prestige | ${client.ws.ping} ms`,
+                        name: `/prestige | ${client.ws.ping}ms`,
                         type: ActivityType.Playing
                     }
                 ],
