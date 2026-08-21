@@ -13,6 +13,16 @@ const prestige = new SlashCommandBuilder()
             .setDescription('ユーザー名')
             .setRequired(true)
     )
+    .addStringOption(option =>
+        option.setName('rank')
+            .setDescription('ランク(任意)')
+            .setRequired(false)
+            .addChoices(
+                { name: "Ultimate", value: "ULTIMATE" },
+                { name: "Plus", value: "PLUS" },
+                { name: "Regular", value: "REGULAR"}
+            )
+    )
     .setIntegrationTypes([
         ApplicationIntegrationType.GuildInstall,
         ApplicationIntegrationType.UserInstall
@@ -21,7 +31,7 @@ const prestige = new SlashCommandBuilder()
         InteractionContextType.Guild,
         InteractionContextType.BotDM,
         InteractionContextType.PrivateChannel
-    ]);;
+    ]);
 
 const setup = new SlashCommandBuilder()
     .setName('setup')

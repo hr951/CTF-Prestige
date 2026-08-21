@@ -72,6 +72,7 @@ module.exports = {
 
     async execute(interaction) {
         const name = interaction.options.getString('name');
+        let rank = interaction.options.getString('rank');
 
         await interaction.deferReply();
 
@@ -79,7 +80,9 @@ module.exports = {
             const res = await axios.get(`https://api.playhive.com/v0/game/all/ctf/${name}`);
             const user_res = await axios.get(`https://api.playhive.com/v0/game/all/main/${name}`);
             const username = user_res.data.main.username_cc || name;
-            const rank = user_res.data.main.rank;
+            if (!rank) {
+                rank = user_res.data.main.rank;
+            }
 
             const wins = (res.data.victories || 0).toLocaleString();
             const losses = (res.data.played - res.data.victories || 0).toLocaleString();
