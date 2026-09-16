@@ -1,4 +1,5 @@
 const { ActivityType, PresenceUpdateStatus } = require("discord.js");
+const { sendHeartbeat } = require("../utils/dashboards/sendHeartbeat");
 
 module.exports = {
     name: 'clientReady',
@@ -16,5 +17,8 @@ module.exports = {
         }, 5_000);
 
         custom.log(`Logged in as ${client.user.tag}`);
+        setInterval(async () => {
+            await sendHeartbeat(client);
+        }, 60_000);
     },
 };
