@@ -7,6 +7,10 @@ require('./utils/createLogs');
 
 require('./server.js');
 
+const dns = require('node:dns');
+
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,

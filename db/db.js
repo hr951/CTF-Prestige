@@ -5,6 +5,18 @@ const EarthTopSchema = new mongoose.Schema({
     channelId_del: { type: [String] }, // 削除対象チャンネルID
     channelId_send: { type: String }, // 送信対象チャンネルID
     deleteTime: { type: Number }, // 削除までの時間（分）
+    ch_mcid: { type: [String] }, // MCID送信チャンネル
+    mcid: [
+        {
+            discordId: { type: String },
+            mcid: [
+                {
+                    mcid: { type: String },
+                    verify: { type: Boolean }
+                }
+            ]
+        }
+    ]
 });
 const EarthTopUtils = mongoose.model('EarthTopUtils', EarthTopSchema);
 

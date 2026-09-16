@@ -1,5 +1,9 @@
 const { sendMessage } = require('../utils/sendMessages.js');
 const { EarthTopUtils } = require('../db/db');
+const { joinVoiceChannel } = require('@discordjs/voice');
+const { searchBedrockPlayer } = require('../utils/minecrafts/searchUser.js');
+
+let connection;
 
 module.exports = {
     name: 'messageCreate',
@@ -19,5 +23,64 @@ module.exports = {
             }, data.deleteTime * 60 * 1000);
         }
         if (message.author.bot) return;
+
+        if (data && data.ch_mcid.includes(message.channel.id)) {
+            const playerData = await searchBedrockPlayer(message.cleanContent);
+            const playerExists = playerData.exists;
+            try {
+                const result = await EarthTopUtils.updateOne(
+                    {
+                        _id: message.guild.id,
+                        "mcid.discordId": message.author.id
+                    },
+                    {
+                        $push: {
+                            "mcid.$.mcid": {
+                                mcid: message.cleanContent,
+                                verify: playerExists
+                            }
+                        }
+                    }
+                );
+
+                if (!result.matchedCount) {
+                    await EarthTopUtils.updateOne(
+                        { _id: message.guild.id },
+                        {
+                            $push: {
+                                mcid: {
+                                    discordId: message.author.id,
+                                    mcid: [{
+                                        mcid: message.cleanContent,
+                                        verify: playerExists
+                                    }]
+                                }
+                            }
+                        }
+                    );
+                }
+            } catch (err) {
+                console.error(err);
+            }
+
+            message.delete();
+        }
+
+        if (message.author.id === "962670040795201557") {
+            if (message.content === "!join") {
+                const channel = message.member?.voice.channel;
+                if (!channel) {
+                    message.reply("You need to join a voice channel first!");
+                    return;
+                }
+                connection = joinVoiceChannel({
+                    channelId: channel.id,
+                    guildId: message.guild.id,
+                    adapterCreator: message.guild.voiceAdapterCreator,
+                });
+            } else if (message.content === "!leave") {
+                connection.destroy();
+            }
+        }
     },
 };

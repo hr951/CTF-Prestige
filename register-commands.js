@@ -20,7 +20,7 @@ const prestige = new SlashCommandBuilder()
             .addChoices(
                 { name: "Ultimate", value: "ULTIMATE" },
                 { name: "Plus", value: "PLUS" },
-                { name: "Regular", value: "REGULAR"}
+                { name: "Regular", value: "REGULAR" }
             )
     )
     .setIntegrationTypes([
@@ -35,7 +35,17 @@ const prestige = new SlashCommandBuilder()
 
 const setup = new SlashCommandBuilder()
     .setName('setup')
-    .setDescription('管理者権限が必要です');
+    .setDescription('管理者権限が必要です')
+    .addSubcommand(subcommand =>
+        subcommand
+            .setName('del_ch')
+            .setDescription('自動メッセージ削除の設定を行います')
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+            .setName('mcid_ch')
+            .setDescription('MCID送信チャンネルの設定を行います')
+    );
 
 const commands = [prestige, setup];
 
