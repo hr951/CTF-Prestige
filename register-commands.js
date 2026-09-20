@@ -47,7 +47,16 @@ const setup = new SlashCommandBuilder()
             .setDescription('MCID送信チャンネルの設定を行います')
     );
 
-const commands = [prestige, setup];
+const inquiry = new SlashCommandBuilder()
+    .setName('inquiry')
+    .setDescription('一定以上の権限が必要です')
+    .addSubcommand(subcommand =>
+        subcommand
+            .setName('user')
+            .setDescription('ユーザー情報の照会を行います')
+    );
+
+const commands = [prestige, setup, inquiry];
 
 // 登録用関数
 const { REST, Routes } = require("discord.js")
