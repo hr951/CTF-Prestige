@@ -2,6 +2,8 @@ const { sendMessage } = require('../utils/sendMessages.js');
 const { EarthTopUtils } = require('../db/db');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const { searchBedrockPlayer } = require('../utils/minecrafts/searchUser.js');
+const config_data = require('../data/config.json');
+const { createConfigBoard } = require('../utils/configBoards');
 
 let connection;
 
@@ -66,7 +68,7 @@ module.exports = {
             message.delete();
         }
 
-        if (message.author.id === "962670040795201557") {
+        if (message.author.id === config_data.developerId) {
             if (message.content === "!join") {
                 const channel = message.member?.voice.channel;
                 if (!channel) {
@@ -80,6 +82,8 @@ module.exports = {
                 });
             } else if (message.content === "!leave") {
                 connection.destroy();
+            } else if (message.content.startsWith("!setting")) {
+                message.channel.send(createConfigBoard(message.content.substr(message.content.indexOf(' ') + 1)));
             }
         }
     },

@@ -4,12 +4,10 @@ async function searchBedrockPlayer(gamertag) {
     const response = await fetch(url);
 
     if (!response.ok) {
-        if (response.status === 404) {
-            return {
-                exists: false,
-                gamertag
-            };
-        }
+        return {
+            exists: false,
+            gamertag
+        };
     }
 
     const data = await response.json();
